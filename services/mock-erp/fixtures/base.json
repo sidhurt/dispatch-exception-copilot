@@ -1,0 +1,51 @@
+{
+  "plants": [
+    { "plantId": "KC01", "name": "Kestrel Cement – Ridgeford Works", "weighTolerancePct": 0.5 },
+    { "plantId": "KC02", "name": "Kestrel Cement – Harlow Grinding Unit", "weighTolerancePct": 0.5 }
+  ],
+  "storageLocations": [
+    { "plantId": "KC01", "slocId": "FG01", "name": "Bagged finished goods" },
+    { "plantId": "KC01", "slocId": "SL01", "name": "Bulk silo 1" },
+    { "plantId": "KC02", "slocId": "FG01", "name": "Bagged finished goods" }
+  ],
+  "materials": [
+    { "materialId": "OPC53-BAG", "description": "OPC 53 grade, 50 kg bags", "packaging": "BAG" },
+    { "materialId": "OPC53-BULK", "description": "OPC 53 grade, bulk", "packaging": "BULK" },
+    { "materialId": "PPC-BAG", "description": "PPC, 50 kg bags", "packaging": "BAG" },
+    { "materialId": "PPC-BULK", "description": "PPC, bulk", "packaging": "BULK" }
+  ],
+  "batches": [
+    { "batchId": "B2610-0141", "materialId": "OPC53-BAG", "plantId": "KC01", "producedOn": "2026-10-01" },
+    { "batchId": "B2610-0142", "materialId": "PPC-BAG", "plantId": "KC01", "producedOn": "2026-10-01" },
+    { "batchId": "B2610-0150", "materialId": "OPC53-BULK", "plantId": "KC01", "producedOn": "2026-10-02" },
+    { "batchId": "B2610-0151", "materialId": "PPC-BULK", "plantId": "KC01", "producedOn": "2026-10-02" }
+  ],
+  "customers": [
+    { "customerId": "C1001", "name": "Harbourline Builders", "creditLimit": 250000, "creditExposure": 120000, "creditStatus": "OK", "currency": "USD" },
+    { "customerId": "C1002", "name": "Greystone Infra Projects", "creditLimit": 500000, "creditExposure": 492000, "creditStatus": "OK", "currency": "USD" },
+    { "customerId": "C1003", "name": "Millbrook Ready-Mix", "creditLimit": 150000, "creditExposure": 40000, "creditStatus": "BLOCKED", "currency": "USD" },
+    { "customerId": "C1004", "name": "Eastvale Housing Co-op", "creditLimit": 300000, "creditExposure": 90000, "creditStatus": "OK", "currency": "USD" }
+  ],
+  "carriers": [
+    { "carrierId": "CR01", "name": "Northway Haulage", "remarks": "Prefers morning slots." },
+    { "carrierId": "CR02", "name": "Brightline Logistics", "remarks": "" }
+  ],
+  "trucks": [
+    { "truckId": "TRK-011", "carrierId": "CR01", "registrationNo": "KX-71-4471", "capacityT": 32, "status": "AVAILABLE" },
+    { "truckId": "TRK-012", "carrierId": "CR01", "registrationNo": "KX-71-4472", "capacityT": 25, "status": "AVAILABLE" },
+    { "truckId": "TRK-014", "carrierId": "CR02", "registrationNo": "KX-55-1190", "capacityT": 40, "status": "AVAILABLE" },
+    { "truckId": "TRK-015", "carrierId": "CR02", "registrationNo": "KX-55-1191", "capacityT": 18, "status": "AVAILABLE" },
+    { "truckId": "TRK-016", "carrierId": "CR02", "registrationNo": "KX-55-1192", "capacityT": 32, "status": "OUT_OF_SERVICE" }
+  ],
+  "stocks": [
+    { "plantId": "KC01", "slocId": "FG01", "materialId": "OPC53-BAG", "batchId": "B2610-0141", "unrestrictedT": 420, "blockedT": 0 },
+    { "plantId": "KC01", "slocId": "FG01", "materialId": "PPC-BAG", "batchId": "B2610-0142", "unrestrictedT": 180, "blockedT": 6 },
+    { "plantId": "KC01", "slocId": "SL01", "materialId": "OPC53-BULK", "batchId": "B2610-0150", "unrestrictedT": 900, "blockedT": 0 },
+    { "plantId": "KC01", "slocId": "SL01", "materialId": "PPC-BULK", "batchId": "B2610-0151", "unrestrictedT": 18, "blockedT": 0 }
+  ],
+  "postingPeriods": [
+    { "year": 2026, "month": 9, "status": "CLOSED" },
+    { "year": 2026, "month": 10, "status": "OPEN" },
+    { "year": 2026, "month": 11, "status": "OPEN" }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "dispatch-exception-copilot",
+  "private": true,
+  "workspaces": [
+    "services/*",
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "erp": "npm run dev -w services/mock-erp",
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  }
+}

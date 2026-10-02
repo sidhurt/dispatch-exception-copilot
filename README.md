@@ -2,7 +2,7 @@
 
 **An AI copilot that works out why a cement shipment is stuck, proposes the fix, and lets a human approve it, without ever being able to make an unsafe change itself.**
 
-> **Status (2026-10-03): design phase.** The spec is frozen. No code yet. This page is updated as the build progresses, and it says honestly what works and what doesn't. See [Status](#status).
+> **Status (2026-10-03): building.** The spec is frozen, and the mock ERP works with tests passing. The copilot itself isn't built yet. This page is updated as the build progresses, and it says honestly what works and what doesn't. See [Status](#status).
 
 ---
 
@@ -102,7 +102,7 @@ All data is synthetic. **Kestrel Cement** is a fictional company.
 | Area | State |
 |---|---|
 | Spec ([`docs/SPEC.md`](docs/SPEC.md)) | ✅ Frozen 2026-10-03 |
-| Mock ERP | ⏳ Next (Oct 5–11) |
+| Mock ERP ([`services/mock-erp`](services/mock-erp)) | ✅ v1 built: statuses and guards, OData-style reads and actions, chaos, 30 tests |
 | Tools, PGI write tool | ⏳ Oct 5–11 |
 | Agent loop, approvals, console | ⏳ Oct 12–18 |
 | End-to-end v1 | ⏳ Target Oct 19 |
