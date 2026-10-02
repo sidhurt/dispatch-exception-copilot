@@ -1,0 +1,14 @@
+# Private working files: stay on this laptop, never pushed
+CLAUDE.md
+AGENTS.md
+docs/LEARNING_LOG.md
+docs/weekly/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Build output
+node_modules/
+dist/
