@@ -238,7 +238,12 @@ function throwIfFailed(failures: ErrorDetail[]) {
   }
 }
 
-export async function postGoodsIssue(tx: Tx, d: Delivery, body: { postingDate: string }, by: string) {
+export async function postGoodsIssue(
+  tx: Tx,
+  d: Delivery,
+  body: { postingDate: string; clientReference?: string },
+  by: string,
+) {
   const failures: ErrorDetail[] = [];
 
   // 1. status
@@ -307,6 +312,7 @@ export async function postGoodsIssue(tx: Tx, d: Delivery, body: { postingDate: s
       deliveryId: d.deliveryId,
       plantId: d.plantId,
       reversesGoodsMovementId: null,
+      clientReference: body.clientReference ?? null,
       postingDate: body.postingDate,
       postedAt: now,
       postedBy: by,
@@ -324,7 +330,7 @@ export async function postGoodsIssue(tx: Tx, d: Delivery, body: { postingDate: s
     documentId: d.deliveryId,
     eventType: 'GOODS_ISSUE_POSTED',
     by,
-    details: { goodsMovementId: movement!.goodsMovementId, movementType: '601' },
+    details: { goodsMovementId: movement!.goodsMovementId, movementType: '601', clientReference: body.clientReference ?? null },
   });
   await logStatusChange(tx, 'OutboundDelivery', d.deliveryId, d.status, 'PGI_POSTED', by);
   return { delivery: delivery!, goodsMovement: movement! };
@@ -333,7 +339,7 @@ export async function postGoodsIssue(tx: Tx, d: Delivery, body: { postingDate: s
 export async function reverseGoodsIssue(
   tx: Tx,
   d: Delivery,
-  body: { goodsMovementId: string; postingDate: string; reason: string },
+  body: { goodsMovementId: string; postingDate: string; reason: string; clientReference?: string },
   by: string,
 ) {
   const failures: ErrorDetail[] = [];
@@ -386,6 +392,7 @@ export async function reverseGoodsIssue(
       deliveryId: d.deliveryId,
       plantId: d.plantId,
       reversesGoodsMovementId: original!.goodsMovementId,
+      clientReference: body.clientReference ?? null,
       postingDate: body.postingDate,
       postedAt: new Date(),
       postedBy: by,

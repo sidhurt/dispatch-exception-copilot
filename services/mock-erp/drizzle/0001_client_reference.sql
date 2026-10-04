@@ -1,0 +1,1 @@
+ALTER TABLE "goods_movements" ADD COLUMN "client_reference" text;

@@ -173,6 +173,9 @@ export const goodsMovements = pgTable('goods_movements', {
   deliveryId: text().notNull(),
   plantId: text().notNull(),
   reversesGoodsMovementId: text(),
+  // Label the caller attached to the write (e.g. a proposal id), so it can find its own posting later.
+  // The ERP only stores it; it does not reject repeats. (ADR-004)
+  clientReference: text(),
   postingDate: day().notNull(),
   postedAt: at().notNull(),
   postedBy: text().notNull(),

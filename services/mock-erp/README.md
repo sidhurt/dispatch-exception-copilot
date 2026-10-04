@@ -11,6 +11,8 @@ npm run erp          # starts on http://localhost:4001 with the standard Kestrel
 
 No Docker needed. The database is [PGlite](https://pglite.dev), a real Postgres that runs inside the Node process. Its data lives in memory, so every restart begins again from `fixtures/base.json`.
 
+**After a database change** (a new file in `drizzle/`), stop the ERP and start it again. `npm run erp` restarts itself on code changes, but not when a new migration appears, so it can end up with an out-of-date database (you'll see 500 errors).
+
 ## Try it
 
 ```bash

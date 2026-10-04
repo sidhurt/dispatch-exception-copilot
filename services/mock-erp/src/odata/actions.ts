@@ -17,6 +17,7 @@ import { columnsOf, etagOf, parseEtag, serialize, setDef, type SetName } from '.
 import { parseKey } from './query';
 
 const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-DD.');
+const clientReference = z.string().min(1).max(64);
 
 type ActionDef = {
   set: SetName;
@@ -41,13 +42,15 @@ const ACTIONS: Record<ActionName, ActionDef> = {
   PostGoodsIssue: {
     set: 'OutboundDeliveries',
     documentType: 'OutboundDelivery',
-    body: z.object({ postingDate: isoDate }).strict(),
+    body: z.object({ postingDate: isoDate, clientReference: clientReference.optional() }).strict(),
     run: postGoodsIssue,
   },
   ReverseGoodsIssue: {
     set: 'OutboundDeliveries',
     documentType: 'OutboundDelivery',
-    body: z.object({ goodsMovementId: z.string().min(1), postingDate: isoDate, reason: z.string().min(1) }).strict(),
+    body: z
+      .object({ goodsMovementId: z.string().min(1), postingDate: isoDate, reason: z.string().min(1), clientReference: clientReference.optional() })
+      .strict(),
     run: reverseGoodsIssue,
   },
   RequestCreditRelease: {

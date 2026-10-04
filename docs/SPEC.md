@@ -208,6 +208,7 @@ The tables list the fields each record has. **Bold** fields are the record's ID.
 | movementType | `601` \| `602` | 601 = goods issue for a delivery; 602 = its reversal |
 | deliveryId, plantId | string | |
 | reversesGoodsMovementId | string \| null | only set on a 602 |
+| clientReference | string \| null | the caller's label for this write, e.g. a proposal id. Stored and searchable; the ERP does **not** reject repeats. *(Added by ADR-004, pending.)* |
 | postingDate | date | which accounting period it belongs to |
 | postedAt | timestamp | |
 | postedBy | string | the user who approved it (from the `X-User` header) |
@@ -416,8 +417,8 @@ All actions are `POST`, with a JSON body and `If-Match` on the record in the URL
 |---|---|---|
 | Assign a truck | `POST /odata/Shipments('{id}')/AssignTruck` | `{ "truckId": "TRK-014" }` |
 | Adjust delivery quantity | `POST /odata/OutboundDeliveries('{id}')/AdjustQuantity` | `{ "itemNo": 10, "newQuantityT": 29.62 }` |
-| Post goods issue | `POST /odata/OutboundDeliveries('{id}')/PostGoodsIssue` | `{ "postingDate": "2026-10-03" }` |
-| Reverse goods issue | `POST /odata/OutboundDeliveries('{id}')/ReverseGoodsIssue` | `{ "goodsMovementId": "4900000123", "postingDate": "2026-10-03", "reason": "..." }` |
+| Post goods issue | `POST /odata/OutboundDeliveries('{id}')/PostGoodsIssue` | `{ "postingDate": "2026-10-03", "clientReference"?: "P-0007" }` |
+| Reverse goods issue | `POST /odata/OutboundDeliveries('{id}')/ReverseGoodsIssue` | `{ "goodsMovementId": "4900000123", "postingDate": "2026-10-03", "reason": "...", "clientReference"?: "..." }` |
 | Request credit release | `POST /odata/SalesOrders('{id}')/RequestCreditRelease` | `{ "reason": "..." }` → returns `{ "requestId": "CRR-0007", "status": "REQUESTED" }` |
 
 **Example: a successful PGI**

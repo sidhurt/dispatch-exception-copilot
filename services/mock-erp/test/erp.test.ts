@@ -243,6 +243,39 @@ describe('chaos', () => {
   });
 });
 
+describe('client reference (ADR-004)', () => {
+  it('stores the caller\'s reference on the goods movement and lets it be searched', async () => {
+    const { deliveryId } = await loadedDelivery(erp);
+    const pgi = await erp.act(del(deliveryId), 'PostGoodsIssue', { ...PGI, clientReference: 'P-0007' });
+    expect(pgi.body.goodsMovement.clientReference).toBe('P-0007');
+
+    const found = await erp.get(`/odata/GoodsMovements?$filter=clientReference eq 'P-0007'`);
+    expect(found.body.value.map((m: { deliveryId: string }) => m.deliveryId)).toEqual([deliveryId]);
+  });
+
+  it('after a dropped connection, the caller can find its own posting by reference', async () => {
+    const { deliveryId } = await loadedDelivery(erp);
+    await erp.call('PUT', '/sim/chaos', { rules: [{ kind: 'timeout_after_commit', action: 'PostGoodsIssue', times: 1 }] });
+    await expect(erp.act(del(deliveryId), 'PostGoodsIssue', { ...PGI, clientReference: 'P-0008' })).rejects.toThrow();
+
+    const mine = await erp.get(`/odata/${del(deliveryId)}/goodsMovements?$filter=clientReference eq 'P-0008'`);
+    expect(mine.body.value).toHaveLength(1);
+    expect(mine.body.value[0].movementType).toBe('601');
+  });
+
+  it('is optional, and null when not sent', async () => {
+    const { deliveryId } = await loadedDelivery(erp);
+    const pgi = await erp.act(del(deliveryId), 'PostGoodsIssue', PGI);
+    expect(pgi.body.goodsMovement.clientReference).toBeNull();
+  });
+
+  it('rejects an empty or overly long reference', async () => {
+    const { deliveryId } = await loadedDelivery(erp);
+    expect((await erp.act(del(deliveryId), 'PostGoodsIssue', { ...PGI, clientReference: '' })).status).toBe(400);
+    expect((await erp.act(del(deliveryId), 'PostGoodsIssue', { ...PGI, clientReference: 'x'.repeat(65) })).status).toBe(400);
+  });
+});
+
 describe('credit', () => {
   const order = (customerId: string, orderValue: number) =>
     erp.sim('/salesorders', {
